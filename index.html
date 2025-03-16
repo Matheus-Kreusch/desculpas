@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz do Perdão</title>
+    <subtitle 
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f9e5e5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin-top: 10%;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 2.5rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 1.5em;
+        }
+
+        button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+            background-color: #28a745;
+            color: white;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #answers button {
+            display: block;
+            margin: 10px auto;
+            width: 60%;
+            background-color: #ff6b81;
+        }
+
+        #result img {
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        /* Animação suave na troca de perguntas */
+        .fade {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .fade.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz do Perdão</h1>
+        <p>@mathkrch</p>
+        <button id="startQuiz">Começar o Quiz</button>
+
+        <div id="quiz" class="hidden fade">
+            <p id="question"></p>
+            <div id="answers"></div>
+        </div>
+
+        <div id="result" class="hidden fade">
+            <p>Parabéns! 🎉 Você acabou de me perdoar!</p>
+            <img src="90e36f0ffb442d3ce9c620a7af9adf67.jpg" alt="GIF engraçado" width="250">
+            <br>
+            <button id="restartQuiz">Recomeçar</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "O que você acha da minha tentativa de pedir desculpas?",
+                answers: ["Fofo demais", "Meio idiota, mas engraçado", "Tá tentando muito"]
+            },
+            {
+                question: "O que vale mais: orgulho ou um chocolate grátis?",
+                answers: ["Chocolate!", "Depende do chocolate", "Orgulho"]
+            },
+            {
+                question: "Se eu tivesse poderes mágicos, qual feitiço deveria usar para me perdoar?",
+                answers: ["Expecto Perdoamus", "Avada me desculpada", "Wingardium Perdoai-nos"]
+            },
+            {
+                question: "Se eu fosse um personagem de filme pedindo desculpas, quem eu seria?",
+                answers: ["O burro do Shrek KKKKKJK", "O Coringa, porque minha vida virou uma piada 🤡", "O Homem-Aranha: sempre erra, mas tenta consertar 🕷️"]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        const startQuizButton = document.getElementById("startQuiz");
+        const quizContainer = document.getElementById("quiz");
+        const questionElement = document.getElementById("question");
+        const answersElement = document.getElementById("answers");
+        const resultElement = document.getElementById("result");
+        const restartQuizButton = document.getElementById("restartQuiz");
+
+        startQuizButton.addEventListener("click", function() {
+            startQuizButton.style.display = "none";
+            quizContainer.classList.remove("hidden");
+            quizContainer.classList.add("show");
+            showQuestion();
+        });
+
+        function showQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const currentQuestion = questions[currentQuestionIndex];
+                questionElement.innerText = currentQuestion.question;
+                answersElement.innerHTML = "";
+
+                currentQuestion.answers.forEach(answer => {
+                    const button = document.createElement("button");
+                    button.innerText = answer;
+                    button.addEventListener("click", nextQuestion);
+                    answersElement.appendChild(button);
+                });
+
+                quizContainer.classList.add("fade");
+                setTimeout(() => quizContainer.classList.remove("fade"), 100);
+            } else {
+                showResult();
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        function showResult() {
+            quizContainer.classList.add("hidden");
+            resultElement.classList.remove("hidden");
+            resultElement.classList.add("show");
+        }
+
+        restartQuizButton.addEventListener("click", function() {
+            currentQuestionIndex = 0;
+            resultElement.classList.add("hidden");
+            resultElement.classList.remove("show");
+            quizContainer.classList.remove("hidden");
+            showQuestion();
+        });
+    </script>
+</body>
+</html>
